@@ -18,14 +18,28 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  float start = micros();
+  bool on_state = false;
   hallSensorValue = digitalRead(hallSensorPin);
-  int counter = 0;
-  if (hallSensorValue == 0) {
-    counter = counter + 1;
+  float counter = 1.0;
+  while (true) {
+    if (hallSensorValue == 0) {
+      if (on_state == false) {
+        on_state = true;
+        counter= counter + 1.0;
+       }
+      } else {
+        on_state = false;
+      }
     }
-  else {
-    counter = counter;
-  }
-  display.showNumberDec(counter);
-  Serial.println(counter);
+    
+  float end_time = micros();
+  float time_passed = ((end_time-start)/1000000.0);
+  Serial.print("Time Passed: ");
+  Serial.print(time_passed);
+  float rpm_val = (counter/time_passed)*60.0;
+  Serial.print(rpm_val);
+  Serial.println(" RPM");
+  delay(1); // for stability
+  display.showNumberDec(rpm_val);
 }
