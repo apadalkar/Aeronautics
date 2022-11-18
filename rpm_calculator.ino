@@ -13,12 +13,12 @@ void setup() {
   // put your setup code here, to run once:
   pinMode(hallSensorPin, INPUT); //configure hallSensorPin as input
   display.setBrightness(2);// set brightness; 0-7
-  Serial.begin(9600);
+  Serial.begin(9600); 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  float start = micros();
+  float start_time = micros();
   bool on_state = false;
   hallSensorValue = digitalRead(hallSensorPin);
   float counter = 1.0;
@@ -34,7 +34,7 @@ void loop() {
     }
     
   float end_time = micros();
-  float time_passed = ((end_time-start)/1000000.0);
+  float time_passed = ((end_time - start_time)/1000000.0);
   Serial.print("Time Passed: ");
   Serial.print(time_passed);
   float rpm_val = (counter/time_passed)*60.0;
